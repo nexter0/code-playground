@@ -62,11 +62,11 @@ public class Frame extends JFrame implements ActionListener {
                 a = Float.parseFloat(lengthPromptFields[0].getText());
                 b = Float.parseFloat(lengthPromptFields[1].getText());
                 c = Float.parseFloat(lengthPromptFields[2].getText());
+                System.out.print(Math.atan(a/b)*180/Math.PI + "\n");
             } catch (NumberFormatException ex) {
                 System.out.println("bad");
-                //UIManager.put("Button.background", Color.white);
-                //UIManager.put("Button.setFocusable", false);
-                JOptionPane.showMessageDialog(null, "Invalid number. Please enter positive real values only.", "Invalid number", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Invalid number. Please enter positive real values.\n" +
+                        "Use dot as the decimal separator.", "Invalid number", JOptionPane.ERROR_MESSAGE);
                 for (JTextField field : lengthPromptFields) {
                     field.setText("0");
                 }
