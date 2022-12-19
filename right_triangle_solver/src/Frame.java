@@ -3,15 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class Frame extends JFrame implements ActionListener {
-    Font defaultFont = new Font("Courier New", Font.PLAIN, 20);
-    Font buttonFont = new Font("Courier New", Font.BOLD, 16);
-    JLabel labelLength1, labelLength2, labelLength3, labelAngle1, labelAngle2, labelAngle3;
-    JTextField[] lengthFields = new JTextField[] {new JTextField(), new JTextField(), new JTextField()};
-    JTextField[] angleFields = new JTextField[] {new JTextField(), new JTextField(), new JTextField()};
-    JButton submitButton;
-
     public float a, b, c;
     Frame() {
         this.setTitle("Right Triangle Solver");
@@ -33,12 +25,15 @@ public class Frame extends JFrame implements ActionListener {
         labelAngle1 = new Label("Angle α", 200, 25, 200, 20);
         labelAngle2 = new Label("Angle β", 200, 95, 200, 20);
         labelAngle3 = new Label("Angle γ", 200, 165, 200, 20);
+        notRightLabel = new Label("This is not a right triangle.", 140, 260, 400, 20);
         this.add(labelLength1);
         this.add(labelLength2);
         this.add(labelLength3);
         this.add(labelAngle1);
         this.add(labelAngle2);
         this.add(labelAngle3);
+        this.add(notRightLabel);
+        notRightLabel.setVisible(false);
     }
 
     private void textFields() {
@@ -93,22 +88,38 @@ public class Frame extends JFrame implements ActionListener {
     }
 
     private void updateAngleFields(Triangle triangle) {
-        angleFields[0].setText(Float.toString(triangle.getAlpha()));
-        angleFields[1].setText(Float.toString(triangle.getBeta()));
-        angleFields[2].setText(Float.toString(triangle.getGamma()));
+        angleFields[0].setText(Double.toString(triangle.getAlpha()));
+        angleFields[1].setText(Double.toString(triangle.getBeta()));
+        angleFields[2].setText(Double.toString(triangle.getGamma()));
     }
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton) {
-            try {
+           try {
+                notRightLabel.setVisible(false);
                 getLengths();
                 Triangle triangle = new Triangle(a, b, c);
-                updateAngleFields(triangle);
-                System.out.println(triangle.isRight());
+                if (triangle.isRight()) {
+                    updateAngleFields(triangle);
+                    Triangle.TriangleImage t = new Triangle.TriangleImage();
+                    this.add(t);
+                    t.repaint();
+                }
+                else {
+                    notRightLabel.setVisible(true);
+                }
             } catch (Exception ex) {
                 handleInvalidValues();
             }
         }
     }
+    Font defaultFont = new Font("Courier New", Font.PLAIN, 20);
+    Font buttonFont = new Font("Courier New", Font.BOLD, 16);
+    JLabel labelLength1, labelLength2, labelLength3, labelAngle1, labelAngle2, labelAngle3, notRightLabel;
+    JTextField[] lengthFields = new JTextField[] {new JTextField(), new JTextField(), new JTextField()};
+    JTextField[] angleFields = new JTextField[] {new JTextField(), new JTextField(), new JTextField()};
+    JButton submitButton;
 }
