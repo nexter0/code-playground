@@ -48,6 +48,15 @@ public class Triangle {
             setVisible(true);
             repaint();
         }
+
+        TriangleImage(Triangle t) {
+            setBounds(170, 250, 200, 200);
+            setBackground(Color.white);
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            setVisible(true);
+            repaint();
+            triangle = t;
+        }
         private static void drawRightTriangle(Graphics g, int x1, int y1, int x2, int y2, int x3, int y3) {
             Graphics2D g2 = (Graphics2D) g;
             int WIDTH = 200;
@@ -72,13 +81,13 @@ public class Triangle {
             super.paintComponent(g);
             int x1 = 50;
             int y1 = 50;
-            int x2 = 175;
+            int x2 = 50 + 10 * (int) triangle.getA();
             int y2 = 50;
             int x3 = 50;
-            int y3 = 150;
+            int y3 = 50 + 10 * (int) triangle.getB();
             drawRightTriangle(g, x1, y1, x2, y2, x3, y3);
         }
-
+            Triangle triangle;
     }
 
     public void setA(float a) {

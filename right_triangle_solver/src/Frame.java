@@ -16,7 +16,6 @@ public class Frame extends JFrame implements ActionListener {
         labels();
         textFields();
         buttons();
-        drawTriangle();
     }
 
     private void labels() {
@@ -38,7 +37,6 @@ public class Frame extends JFrame implements ActionListener {
     }
 
     private void textFields() {
-
         int i = 0;
         for (JTextField field : lengthFields) {
             field.setBounds(20, 50 + i, 100, 25);
@@ -94,8 +92,8 @@ public class Frame extends JFrame implements ActionListener {
         angleFields[2].setText(Double.toString(triangle.getGamma()));
     }
 
-    private void drawTriangle() {
-        t = new Triangle.TriangleImage();
+    private void drawTriangle(Triangle triangle) {
+        t = new Triangle.TriangleImage(triangle);
         add(t);
         t.repaint();
         t.setVisible(false);
@@ -107,15 +105,20 @@ public class Frame extends JFrame implements ActionListener {
         if (e.getSource() == submitButton) {
            try {
                 notRightLabel.setVisible(false);
+                if (t != null) {
+                    t.setVisible(false);
+                }
+
                 getLengths();
                 Triangle triangle = new Triangle(a, b, c);
+
                 if (triangle.isRight()) {
                     updateAngleFields(triangle);
+                    drawTriangle(triangle);
                     t.setVisible(true);
                 }
                 else {
                     notRightLabel.setVisible(true);
-                    Triangle.TriangleImage t = new Triangle.TriangleImage();
                     t.setVisible(false);
                 }
             } catch (Exception ex) {
