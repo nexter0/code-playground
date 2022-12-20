@@ -6,8 +6,8 @@ public class Triangle {
         this.a = a;
         this.b = b;
         this.c = c;
-        this.hypotenuse = this.findHypotenuse();
-        this.isRight = checkRight();
+        hypotenuse = findHypotenuse();
+        isRight = checkRight();
         if (isRight) {
             alpha = Math.round(Math.toDegrees(Math.asin(a / hypotenuse)) * 100) / 100.0;
             beta =  Math.round(Math.toDegrees(Math.asin(b / hypotenuse)) * 100) / 100.0;
@@ -41,7 +41,7 @@ public class Triangle {
     public static class TriangleImage extends JPanel {
 
         TriangleImage(Triangle t) {
-            setBounds(170, 250, 200, 200);
+            setBounds(250, 250, 200, 200);
             setBackground(Color.white);
             setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             setVisible(true);
@@ -67,18 +67,52 @@ public class Triangle {
             g2.drawLine(x3, y3, x1, y1);
         }
 
+        private void labels() {
+            double s = Math.round(scale * 10000) / 10000.0;
+            similarityScaleLabel = new Label("k = " + s, 60,170,120, 30);
+            add(similarityScaleLabel);
+        }
+
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            int x1 = 50;
-            int y1 = 50;
-            int x2 = 50 + 10 * (int) triangle.getA();
-            int y2 = 50;
-            int x3 = 50;
-            int y3 = 50 + 10 * (int) triangle.getB();
+
+            int xShift = (int) triangle.getA();
+            int yShift = (int) triangle.getB();
+            isSimilar = false;
+
+            if ((xShift >= 18) || (yShift >= 18)) {
+                isSimilar = true;
+            }
+            else {
+                if (similarityScaleLabel != null) {
+                    similarityScaleLabel.setVisible(false);
+                }
+            }
+
+            while ((xShift >= 18) || (yShift >= 18)) {
+                xShift = (int) (0.75 * xShift);
+                yShift = (int) (0.75 * yShift);
+                scale *= 0.75;
+                System.out.println(scale);
+            }
+
+            if (isSimilar) {
+                labels();
+            }
+
+            int x1 = 20;
+            int y1 = 20;
+            int x2 = 20 + 10 * xShift;
+            int y2 = 20;
+            int x3 = 20;
+            int y3 = 20 + 10 * yShift;
             drawRightTriangle(g, x1, y1, x2, y2, x3, y3);
         }
-            Triangle triangle;
+            public Triangle triangle;
+            public boolean isSimilar;
+            public double scale = 1;
+            Label similarityScaleLabel;
     }
 
     public void setA(double a) {

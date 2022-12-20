@@ -119,7 +119,9 @@ public class Frame extends JFrame implements ActionListener {
                 }
                 else {
                     notRightLabel.setVisible(true);
-                    t.setVisible(false);
+                    if (t != null) {
+                        t.setVisible(false);
+                    }
                 }
             } catch (Exception ex) {
                 handleInvalidValues();
