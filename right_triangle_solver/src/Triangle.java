@@ -42,25 +42,40 @@ public class Triangle {
     public static class TriangleImage extends JPanel {
 
         TriangleImage() {
-            setSize(new Dimension(200,200));
+            setBounds(170, 250, 200, 200);
+            setBackground(Color.white);
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             setVisible(true);
             repaint();
         }
-        private static void drawRightTriangle(Graphics g, double x1, double y1, double x2, double y2, double x3, double y3) {
+        private static void drawRightTriangle(Graphics g, int x1, int y1, int x2, int y2, int x3, int y3) {
             Graphics2D g2 = (Graphics2D) g;
-            g2.draw(new Line2D.Double(x1, y1, x2, y2));
-            g2.draw(new Line2D.Double(x2, y2, x3, y3));
-            g2.draw(new Line2D.Double(x3, y3, x1, y1));
+            int WIDTH = 200;
+            int HEIGHT = 200;
+            int step = 10;
+            g2.setColor(Color.lightGray);
+            for (int i = 0; i < WIDTH; i += step) {
+                g2.drawLine(i, 0, i, HEIGHT);
+            }
+            for (int i = 0; i < HEIGHT; i += step) {
+                g2.drawLine(0, i, WIDTH, i);
+            }
+            g2.setColor(Color.black);
+            g2.setStroke(new BasicStroke(2));
+            g2.drawLine(x1, y1, x2, y2);
+            g2.drawLine(x2, y2, x3, y3);
+            g2.drawLine(x3, y3, x1, y1);
         }
 
-        public void paintComponent(Graphics g, Triangle triangle) {
+        @Override
+        public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            double x1 = 300;
-            double y1 = 20;
-            double x2 = 300 + (triangle.getA() * 20);
-            double y2 = 20;
-            double x3 = 300;
-            double y3 = 20  + (triangle.getB() * 20);
+            int x1 = 50;
+            int y1 = 50;
+            int x2 = 175;
+            int y2 = 50;
+            int x3 = 50;
+            int y3 = 150;
             drawRightTriangle(g, x1, y1, x2, y2, x3, y3);
         }
 

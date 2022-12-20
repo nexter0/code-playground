@@ -6,16 +6,17 @@ import java.awt.event.ActionListener;
 public class Frame extends JFrame implements ActionListener {
     public float a, b, c;
     Frame() {
-        this.setTitle("Right Triangle Solver");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.setSize(512, 512);
-        this.getContentPane().setBackground(new Color(0xF0F0F0));
-        this.setVisible(true);
-        this.setLayout(null);
-        this.labels();
-        this.textFields();
-        this.buttons();
+        setTitle("Right Triangle Solver");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(512, 512);
+        getContentPane().setBackground(new Color(0xF0F0F0));
+        setVisible(true);
+        setLayout(null);
+        labels();
+        textFields();
+        buttons();
+        drawTriangle();
     }
 
     private void labels() {
@@ -26,13 +27,13 @@ public class Frame extends JFrame implements ActionListener {
         labelAngle2 = new Label("Angle β", 200, 95, 200, 20);
         labelAngle3 = new Label("Angle γ", 200, 165, 200, 20);
         notRightLabel = new Label("This is not a right triangle.", 140, 260, 400, 20);
-        this.add(labelLength1);
-        this.add(labelLength2);
-        this.add(labelLength3);
-        this.add(labelAngle1);
-        this.add(labelAngle2);
-        this.add(labelAngle3);
-        this.add(notRightLabel);
+        add(labelLength1);
+        add(labelLength2);
+        add(labelLength3);
+        add(labelAngle1);
+        add(labelAngle2);
+        add(labelAngle3);
+        add(notRightLabel);
         notRightLabel.setVisible(false);
     }
 
@@ -43,7 +44,7 @@ public class Frame extends JFrame implements ActionListener {
             field.setBounds(20, 50 + i, 100, 25);
             field.setFont(defaultFont);
             field.setText("0");
-            this.add(field);
+            add(field);
             i += 70;
         }
         i = 0;
@@ -51,7 +52,7 @@ public class Frame extends JFrame implements ActionListener {
             field.setBounds(200, 50 + i, 100, 25);
             field.setFont(defaultFont);
             field.setText("0");
-            this.add(field);
+            add(field);
             i += 70;
         }
     }
@@ -64,7 +65,7 @@ public class Frame extends JFrame implements ActionListener {
         submitButton.setFocusable(false);
         submitButton.setBackground(Color.lightGray);
         submitButton.setFont(buttonFont);
-        this.add(submitButton);
+        add(submitButton);
     }
 
     private void validateNumbers(float a, float b, float c) throws IllegalArgumentException {
@@ -93,6 +94,12 @@ public class Frame extends JFrame implements ActionListener {
         angleFields[2].setText(Double.toString(triangle.getGamma()));
     }
 
+    private void drawTriangle() {
+        t = new Triangle.TriangleImage();
+        add(t);
+        t.repaint();
+        t.setVisible(false);
+    }
 
 
     @Override
@@ -104,12 +111,12 @@ public class Frame extends JFrame implements ActionListener {
                 Triangle triangle = new Triangle(a, b, c);
                 if (triangle.isRight()) {
                     updateAngleFields(triangle);
-                    Triangle.TriangleImage t = new Triangle.TriangleImage();
-                    this.add(t);
-                    t.repaint();
+                    t.setVisible(true);
                 }
                 else {
                     notRightLabel.setVisible(true);
+                    Triangle.TriangleImage t = new Triangle.TriangleImage();
+                    t.setVisible(false);
                 }
             } catch (Exception ex) {
                 handleInvalidValues();
@@ -122,4 +129,5 @@ public class Frame extends JFrame implements ActionListener {
     JTextField[] lengthFields = new JTextField[] {new JTextField(), new JTextField(), new JTextField()};
     JTextField[] angleFields = new JTextField[] {new JTextField(), new JTextField(), new JTextField()};
     JButton submitButton;
+    Triangle.TriangleImage t;
 }
