@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.lang.Math;
 public class Triangle {
     Triangle(double a, double b, double c) {
@@ -10,44 +9,36 @@ public class Triangle {
         this.hypotenuse = this.findHypotenuse();
         this.isRight = checkRight();
         if (isRight) {
-            this.alpha = Math.round(Math.toDegrees(Math.asin(a / hypotenuse)) * 100) / 100.0;
-            this.beta =  Math.round(Math.toDegrees(Math.asin(b / hypotenuse)) * 100) / 100.0;
-            this.gamma = 90.0;
+            alpha = Math.round(Math.toDegrees(Math.asin(a / hypotenuse)) * 100) / 100.0;
+            beta =  Math.round(Math.toDegrees(Math.asin(b / hypotenuse)) * 100) / 100.0;
+            gamma = 90.0;
         }
     }
 
     private double findHypotenuse() {
-        double ht = this.c;
-        if (this.a > this.c)
-            ht = this.a;
-        if ((this.b > this.a) && (this.b > this.c))
-            ht = this.b;
+        double ht = c;
+        if (a > c)
+            ht = a;
+        if ((b > a) && (b > c))
+            ht = b;
         return ht;
     }
 
     private boolean checkRight() {
         if (hypotenuse == a)
-            return Math.round(Math.pow(this.b, 2) * 100) / 100.0  + Math.round(Math.pow(this.c, 2) * 100) / 100.0 == Math.round(Math.pow(this.hypotenuse, 2) * 100) / 100.0;
+            return Math.round(Math.pow(b, 2) * 100) / 100.0  + Math.round(Math.pow(c, 2) * 100) / 100.0 == Math.round(Math.pow(hypotenuse, 2) * 100) / 100.0;
         if (hypotenuse == b)
-            return Math.round(Math.pow(this.a, 2) * 100) / 100.0  + Math.round(Math.pow(this.c, 2) * 100) / 100.0 == Math.round(Math.pow(this.hypotenuse, 2) * 100) / 100.0;
+            return Math.round(Math.pow(a, 2) * 100) / 100.0  + Math.round(Math.pow(c, 2) * 100) / 100.0 == Math.round(Math.pow(hypotenuse, 2) * 100) / 100.0;
         if (hypotenuse == c) {
-            System.out.println(Math.round(Math.pow(this.a, 2) * 100) / 100.0);
-            System.out.println(Math.round(Math.pow(this.b, 2) * 100) / 100.0);
-            System.out.println(Math.round(Math.pow(this.hypotenuse, 2) * 100) / 100.0);
-            return Math.round(Math.pow(this.a, 2) * 100) / 100.0 + Math.round(Math.pow(this.b, 2) * 100) / 100.0 == Math.round(Math.pow(this.hypotenuse, 2) * 100) / 100.0;
+            System.out.println(Math.round(Math.pow(a, 2) * 100) / 100.0);
+            System.out.println(Math.round(Math.pow(b, 2) * 100) / 100.0);
+            System.out.println(Math.round(Math.pow(hypotenuse, 2) * 100) / 100.0);
+            return Math.round(Math.pow(a, 2) * 100) / 100.0 + Math.round(Math.pow(b, 2) * 100) / 100.0 == Math.round(Math.pow(hypotenuse, 2) * 100) / 100.0;
         }
         return false;
     }
 
     public static class TriangleImage extends JPanel {
-
-        TriangleImage() {
-            setBounds(170, 250, 200, 200);
-            setBackground(Color.white);
-            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-            setVisible(true);
-            repaint();
-        }
 
         TriangleImage(Triangle t) {
             setBounds(170, 250, 200, 200);
@@ -90,19 +81,19 @@ public class Triangle {
             Triangle triangle;
     }
 
-    public void setA(float a) {
+    public void setA(double a) {
         if (a <= 0)
             throw new IllegalArgumentException();
         this.a = a;
     }
 
-    public void setB(float b) {
+    public void setB(double b) {
         if (b <= 0)
             throw new IllegalArgumentException();
         this.b = b;
     }
 
-    public void setC(float c) {
+    public void setC(double c) {
         if (c <= 0)
             throw new IllegalArgumentException();
         this.c = c;
