@@ -7,7 +7,7 @@
 
 n = -1
 while n < 0 or n > 4095:
-    print("This calculator is designed for 12-bit codes.")
+    print("This calculator is designed for 12-bit codes.\n")
     n = int(input('Enter a number (0 - 4095): '))
 
 # Transform into binary
