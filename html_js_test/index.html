@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Guess a number</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+    <body>
+        <header>
+            <main>
+                <div class="logoText">
+                    <img src="images/qm.png" style="filter: invert(100%)" width="256" height="256">
+                </div>
+                <div class="logoImg">
+                    <img src="images/guessanumber.png" alt="logo" width="30%" height="30%">
+                </div>
+                <div class="container">
+                    <p>Guess a number between 1 and 100: </p>
+                    <form onsubmit="checkGuess(); return false;">
+                        <input type="number" id="input">
+                        <button type="button" onclick="checkGuess()">Submit</button>
+                    </form>
+                    <p class="resultText" id="result"></p>
+                    <button type="button" onclick="resetGame()">Restart</button>
+                </div>
+            </main>
+        </header>
+        <script src="script.js"></script>
+    </body>
+</html>
